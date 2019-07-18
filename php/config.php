@@ -1,0 +1,20 @@
+<?php
+session_start();
+ini_set( "display_errors", 0);
+define("URI", "http://localhost/shakya");
+define("AjaxURI",".");
+require_once "php/database.php";
+require_once "php/function.php";
+require_once "php/model/Role.php";
+require_once "php/model/User.php";
+require_once "php/model/Client.php";
+require_once "php/model/Staff.php";
+require_once "php/model/Administrator.php";
+require_once "php/model/Booking.php";
+require_once "php/model/Order.php";
+require_once "php/model/Room.php";
+require_once "php/model/Service.php";
+require_once "php/model/Activity.php";
+require_once "php/addon/calendar.php";
+require_once "php/addon/reservecalendar.php";
+require_once "php/addon/attendancecalendar.php";
