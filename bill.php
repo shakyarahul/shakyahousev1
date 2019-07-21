@@ -34,18 +34,10 @@ if(isset($_POST['generate'])){
 	$user->fetchDetail();
 }else {
 	die;
-} ?>
-<!DOCTYPE html>
-<html>
+} 
+include './header.php';
+?>
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>shakyahouse</title>
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
-    <link rel="stylesheet" href="assets/fonts/ionicons.min.css">
-</head>
 
 <body>
 <a href="index.php">Back</a>
@@ -228,7 +220,6 @@ INNER JOIN `tbl_user` ON `tbl_order`.`clients` = `tbl_user`.`userId` WHERE `tbl_
             </table>
         </div>
     </div>
-    <script src="assets/js/jquery.min.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 </body>
 

@@ -33,7 +33,7 @@ if(isset($_POST["userQuery"])){
     if(empty($userId)){
         $c = new Client($userId,$username,sha1($password),$name,$dob,$emailId,$address,$registeredDate,$passwordNo,$file,$mobile,"3");
         if($user->addAClient($c)){
-            echo "Query Successful";
+            $msg = "Query Successful";
         }
     }else {
         $c = new Client($userId);
@@ -50,7 +50,7 @@ if(isset($_POST["userQuery"])){
         $c->profilePic = $file;
         $c->mobile = $mobile;
         if($user->addAClient($c)){
-            echo "Query Successful";
+            $msg = "Query Successful";
         }   
     }
     
@@ -60,7 +60,7 @@ if(isset($_POST["userQuery"])){
 if(isset($_GET['delete_id'])){
     extract($_GET);
     if($user->deleteAUser($delete_id)){
-        echo "Delete Successful";
+        $msg = "Delete Successful";
     }
 }
 
@@ -70,44 +70,11 @@ if(isset($_GET['update_id'])){
     $c->userId = $_GET['update_id'];
     $c->fetchDetail();
 }
+include './header.php';
 ?>
 
 
 
-<!DOCTYPE html>
-
-
-<html>
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>shakyahouse</title>
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
-    <link rel="stylesheet" href="assets/fonts/ionicons.min.css">
-    <link rel="stylesheet" href="assets/css/styles.min.css">
-</head>
-
-<body>
-    <nav class="navbar navbar-light navbar-expand-md">
-        <div class="container-fluid"><a class="navbar-brand" href="#"><img src="assets/img/logo.png" id="class" class="img-responsive"></a><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
-            <div
-                class="collapse navbar-collapse justify-content-end" id="navcol-1">
-                <ul class="nav navbar-nav">
-                    <li class="nav-item" role="presentation"><a class="nav-link " href="dashboard.php">Home</a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="bookings.php">Bookings</a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="orders.php">Orders</a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link active" href="user.php">Users</a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="services.php">Services</a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="rooms.php">Rooms</a></li>
-                     <li class="nav-item" role="presentation"><a class="nav-link" href="roles.php">Roles</a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="logout.php">Logout</a></li>
-                </ul>
-        </div>
-        </div>
-    </nav>
-    <hr>
     <div class="container">
         <div class="row">
             <div class="col">
@@ -123,9 +90,9 @@ if(isset($_GET['update_id'])){
                         <div class="col-sm-4 label-column"><label class="col-form-label" for="email-input-field">Password No</label></div>
                         <div class="col-sm-6 input-column"><input class="form-control" value="<?= $c->passwordNo?>"  name="passwordNo" type="text"></div>
                     </div>
-					<div class="form-row form-group">
-                        <div class="col-sm-4 label-column"><label class="col-form-label" for="email-input-field">Nationality</label></div>
-                        <div cl ass="col-sm-6 input-column"><input class="form-control" type="text" value="<?= $c->mobile ?>"  name="mobile"></div>
+                    <div class="form-row form-group">
+                        <div class="col-sm-4 label-column"><label class="col-form-label" for="mobile-input-field">Nationality</label></div>
+                        <div class="col-sm-6 input-column"><input class="form-control" id="mobile-input-field" value="<?= $c->mobile ?>"  name="mobile" type="text"></div>
                     </div>
 					<div class="form-row form-group">
                         <div class="col-sm-4 label-column"><label class="col-form-label" for="email-input-field">Address</label></div>
@@ -137,11 +104,11 @@ if(isset($_GET['update_id'])){
                     </div>
                     <div class="form-row form-group">
                         <div class="col-sm-4 label-column"><label class="col-form-label" for="email-input-field">DOB</label></div>
-                        <div class="col-sm-6 input-column"><input class="form-control" type="text" value="<?= $c->dob?>" name="dob"></div>
+                        <div class="col-sm-6 input-column"><input readonly id="datepicker" type="text" value="<?= $c->dob?>" name="dob" class="form-control"></div>
                     </div>
                     <div class="form-row form-group">
                         <div class="col-sm-4 label-column"><label class="col-form-label" for="email-input-field">Profile Picture</label></div>
-                        <div class="col-sm-6 input-column"><input type="hidden" name="profileImg" value="<?= $c->profilePic?>"><input type="file" accept="image/*;capture=camera"  name="profilePic"></div>
+                        <div class="col-sm-6 input-column"><input type="hidden" name="profileImg" value="<?= $c->profilePic?>"><input type="file" accept="image/*;capture=camera" class="form-control"  name="profilePic"></div>
                     </div>
 					<div class="form-row form-group">
                         <div class="col-sm-4 label-column"><label class="col-form-label" for="email-input-field">Username</label></div>
@@ -154,7 +121,13 @@ if(isset($_GET['update_id'])){
                     <button class="btn btn-light submit-button" name="userQuery" type="submit">Submit Form</button></form>
             </div>
             <div class="col">
-                <input type="text" name="search" id="searchdata" placeholder="search" onkeydown="searchData(event)">
+                <div class="row">
+                    <div class="col-6">
+                        <input type="text" name="search" class="form-control" id="searchdata" placeholder="search" onkeydown="searchData(event)">
+                    </div>
+                    <div id="progressbar" class="col-6"></div>
+                </div>  
+                
                 <div class="table-responsive" id="dynamicTbl">
                     
                     <table class="table table-striped table-sm" >
@@ -171,11 +144,15 @@ if(isset($_GET['update_id'])){
                         </tbody>
                     </table>
                     <script type="text/javascript">
+                    
                         function searchData(e){
                                     var link = "<?php echo AjaxURI ?>/api/client/index.php";
                                     var searchdata = document.getElementById('searchdata').value;
                                             var xmlhttp;
                                             try {
+                                                $( "#progressbar" ).progressbar({
+                                                    value: false
+                                                });
                                                 xmlhttp = new XMLHttpRequest;
                                             } catch (e) {
                                                 xmlhttp = new ActiveXObject("Microsoft.XMLHTTP")
@@ -185,6 +162,9 @@ if(isset($_GET['update_id'])){
                                                 xmlhttp.onreadystatechange = function () {
                                                     if (this.readyState == 4) {                                                        
                                                         var model = document.getElementById('dynamicTbl');
+                                                        $( "#progressbar" ).progressbar({
+                                                            value: true
+                                                        });
                                                         model.innerHTML = this.responseText;
                                                     }
                                                 }
@@ -205,7 +185,6 @@ if(isset($_GET['update_id'])){
         <script>
                             loadmore("now");
                           function loadmore(a) {
-                            
                                     var link = "<?php echo AjaxURI ?>/php/addon/view_attendancecalendar.php";
                                     if(a=="now"){
                                        dataNext = ["<?= date('m') ?>","<?= date('Y') ?>"]; 
@@ -233,20 +212,4 @@ if(isset($_GET['update_id'])){
                             
                             }
                         </script>
-    <div class="footer-basic">
-        <footer>
-            <div class="social"><a href="#"><i class="icon ion-social-instagram"></i></a><a href="#"><i class="icon ion-social-snapchat"></i></a><a href="#"><i class="icon ion-social-twitter"></i></a><a href="#"><i class="icon ion-social-facebook"></i></a></div>
-            <ul class="list-inline">
-                <li class="list-inline-item"><a href="#">Home</a></li>
-                <li class="list-inline-item"><a href="#">About System</a></li>
-                <li class="list-inline-item"><a href="#">Pricing</a></li>
-                <li class="list-inline-item"><a href="#">Copyright Policy</a></li>
-            </ul>
-            <p class="copyright">rahulshakya@hotmail.com © 2018</p>
-        </footer>
-    </div>
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-</body>
-
-</html>
+    <?php include './footer.php' ;?>
