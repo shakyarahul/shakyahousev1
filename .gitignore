@@ -1,0 +1,10 @@
+.DS_Store
+php/addon/attendancecalendar.php
+php/addon/calendar.php
+php/addon/reservecalendar.php
+php/config.php
+error_log
+php/config.php
+php/database.php
+php/addon
+assets/img
