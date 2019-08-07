@@ -34,7 +34,7 @@ class Calendar {
         $month = isset($_GET['month']) ? $_GET['month'] : date('m', time());
 
         $reserve = isset($_GET['rooms']) ? $_GET['rooms'] : "";
-        $jsonArry = json_decode(file_get_contents("http://localhost/shakya/api/booking/"),true);
+        $jsonArry = json_decode(file_get_contents("http://kusumshakya.com.np/project/shakyahousev1/api/booking/"),true);
         $reserveArry = array();
         
         foreach($jsonArry as $a => $v){

@@ -1,5 +1,4 @@
 <?php
-include_once '../config.php';
 class AttendanceCalendar {  
      
     /**
@@ -32,7 +31,7 @@ class AttendanceCalendar {
     public function show() {
         $year = isset($_GET['year']) ? $_GET['year'] : date('Y', time());
         $month = isset($_GET['month']) ? $_GET['month'] : date('m', time());
-            $userData = json_decode(file_get_contents(URI."/api/client/"),true);
+            $userData = json_decode(file_get_contents("http://kusumshakya.com.np/project/shakyahousev1/api/client/"),true);
             $staffs=array();
             foreach ($userData as $key => $value) {
 				if($value['roles'] == "STAFF"){
@@ -40,7 +39,7 @@ class AttendanceCalendar {
 				}
             }
         $staffs = array_unique($staffs);
-        $attendance = json_decode(file_get_contents(HOST."/api/staff/"),true);
+        $attendance = json_decode(file_get_contents("http://kusumshakya.com.np/project/shakyahousev1/api/staff/"),true);
                                                                                       
 
         if(null==$year&&isset($_GET['year'])){

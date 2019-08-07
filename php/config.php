@@ -1,7 +1,7 @@
 <?php
 session_start();
 ini_set( "display_errors", 0);
-define("URI", "http://localhost/shakya");
+define("URI", "http://kusumshakya.com.np/project/shakyahousev1");
 define("AjaxURI",".");
 require_once "php/database.php";
 require_once "php/function.php";

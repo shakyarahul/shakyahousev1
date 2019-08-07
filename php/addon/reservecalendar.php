@@ -32,13 +32,13 @@ class ReserveCalendar {
     public function show() {
         $year = isset($_GET['year']) ? $_GET['year'] : date('Y', time());
         $month = isset($_GET['month']) ? $_GET['month'] : date('m', time());
-            $roomData = json_decode(file_get_contents("http://localhost/shakyahouse/api/room/"),true);
+            $roomData = json_decode(file_get_contents("http://kusumshakya.com.np/project/shakyahousev1/api/room/"),true);
             $rooms=array();
             foreach ($roomData as $key => $value) {
                 array_push($rooms, $value['roomNo']);
             }
         $rooms = array_unique($rooms);
-        $bookings = json_decode(file_get_contents("http://localhost/shakyahouse/api/booking/"),true);
+        $bookings = json_decode(file_get_contents("http://kusumshakya.com.np/project/shakyahousev1/api/booking/"),true);
         
                                                                                       
 
